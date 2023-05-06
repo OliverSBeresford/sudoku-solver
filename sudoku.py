@@ -1,70 +1,77 @@
 import numpy as np
 import sys
 
-def around(grid, x, y):
-  return np.array([
-    grid[r][c] for r in range(y - 1, y + 2) for c in range(x - 1, x + 2)
-    if (r >= 0 and r < len(grid) and c >= 0 and c < len(grid[0])
-        and grid[r][c] != grid[y][x])
-  ])
 
-def check(grid, x, y, num):
-  if num in around(grid, y, x):
-    return False
-  elif np.count_nonzero(grid[0:9, x] == num) >= 2 or np.count_nonzero(grid[y] == num) >= 2:
-    return False
-  return True
+class Sudoku:
 
+  def __init__(self, grid):
+    self.grid = grid
 
-def find(g, end):
-  for num in np.nditer(g, flags=["multi_index"]):
-    if not num:
-      for i in range(1, 10):
-        if check(g, num.multi_index[1], num.multi_index[0]):
-          g[num.multi_index] = i
-          if num.multi_index == end:
-            return True
-          else:
-            if not find(g, end):
-              continue
-          break
+  def around(self, grid, y, x):
+    coordX, coordY = x / 3, y / 3
+    if coordX > 2:
+      coordX = 7
+      if coordY > 2:
+        coordY = 7
+      elif coordY > 1:
+        coordY = 4
       else:
-        return False
+        coordY = 1
+    elif coordX > 1:
+      coordX = 4
+      if coordY > 2:
+        coordY = 7
+      elif coordY > 1:
+        coordY = 4
+      else:
+        coordY = 1
+    else:
+      coordX = 1
+      if coordY > 2:
+        coordY = 7
+      elif coordY > 1:
+        coordY = 4
+      else:
+        coordY = 1
+    return np.array([
+      grid[r][c] for r in range(coordY - 1, coordY + 2)
+      for c in range(coordX - 1, coordX + 2)
+      if (r >= 0 and r < len(grid) and c >= 0 and c < len(grid[0]))
+    ])
 
-
-def solve(sudokuBoard, end):
-  find(sudokuBoard, end)
-  return
-
-def isSolved(sud):
-    for row in range(sud.shape[0]):
-        for col in range(sud.shape[1]):
-            num = sud[row, col]
-            print(f"Element at ({row}, {col}): {num}")
-            if not check(sud, col, row, num):
-                return False
+  def check(self, x, y, num):
+    if np.count_nonzero(self.around(self.grid, y, x) == num) > 1:
+      print("around")
+      return False
+    if np.count_nonzero(self.grid[0:9, x] == num) > 1 or np.count_nonzero(
+        self.grid[y] == num) > 1:
+      print("row")
+      return False
     return True
 
+  def find(self, end):
+    for num in np.nditer(self.grid, flags=["multi_index"]):
+      if not num:
+        for i in range(1, 10):
+          if self.check(self.grid, num.multi_index[1], num.multi_index[0], i):
+            self.grid[num.multi_index] = i
+            if num.multi_index == end:
+              return True
+            else:
+              if not self.find(self.grid, end):
+                continue
+            break
+        else:
+          return False
 
-def main():
-  f = open("0.txt")
-  last = (0, 0)
-  sudoku = f.readline().strip()
-  sudoku = np.array(
-    [np.array(list(map(int, sudoku[x:x + 9]))) for x in range(0, 81, 9)])
-  print(sudoku)
-  for y in range(8, -1, -1):
-    for x in range(8, -1, -1):
-      if not sudoku[y][x]:
-        last = (y, x)
-        break
-    else:
-      continue
-    break
-  print(sudoku.dtype, sudoku.shape)
-  print(isSolved(sudoku))
-  f.close()
+  def solve(self, end):
+    self.find(end)
+    return
 
-
-if __name__ == "__main__":
-  main()
+  def isSolved(self):
+    for row in range(self.grid.shape[0]):
+      for col in range(self.grid.shape[1]):
+        num = self.grid[row, col]
+        if not num or not self.check(col, row, num):
+          return False
+    return True
