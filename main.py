@@ -17,6 +17,11 @@ def main():
       continue
     break
   print(sudoku.isSolved())
+  print(sudoku.solve(last))
+  print(sudoku.isSolved())
+  p = f.readline().strip()
+  print(np.array(
+    [np.array(list(map(int, p[x:x + 9]))) for x in range(0, 81, 9)]))
   f.close()
 
 
