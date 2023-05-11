@@ -36,7 +36,6 @@ class Sudoku:
     return np.array([
       self.grid[r][c] for r in range(coordY - 1, coordY + 2)
       for c in range(coordX - 1, coordX + 2)
-      if (r >= 0 and r < len(self.grid) and c >= 0 and c < len(self.grid[0]))
     ])
 
   def check(self, y, x, num):
@@ -58,12 +57,15 @@ class Sudoku:
             else:
               if not self.find(end):
                 continue
-            break
+              else:
+                break
         else:
+          self.grid[index] = 0
           return False
 
   def solve(self, end):
-    self.find(end)
+    if self.find(end):
+      print("Hello World")
     return self.grid
 
   def isSolved(self):
