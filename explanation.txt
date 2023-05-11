@@ -1,0 +1,16 @@
+define function find: parameters: endIndex
+  loop over flattened grid with index and value:
+    if value is equal to 0:
+      repeat [increment i] until i is 9 starting at 1:
+        make current square's value i.
+        if i fits into the sudoku:
+          if current square in sudoku (grid) is the last empty square in the sudoku:
+            return True
+          if not:
+            if run find with same for endIndex returns False:
+              continue with repeat until i is 9 loop
+          break out of repeat until i is 9 loop
+      if repeat until i is 10 loop made it to the end without breaking:
+        current square becomes empty again
+        return False
+              
