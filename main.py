@@ -7,7 +7,7 @@ def main():
   sudoku = f.readline().strip()
   sudoku = Sudoku(np.array(
     [np.array(list(map(int, sudoku[x:x + 9]))) for x in range(0, 81, 9)]))
-  print(sudoku.grid)
+  print("Original sudoku:\n", sudoku.grid)
   for y in range(8, -1, -1):
     for x in range(8, -1, -1):
       if not sudoku.grid[y][x]:
@@ -16,12 +16,11 @@ def main():
     else:
       continue
     break
-  print(sudoku.isSolved())
-  print(sudoku.solve(last))
-  print(sudoku.isSolved())
-  p = f.readline().strip()
-  print(np.array(
-    [np.array(list(map(int, p[x:x + 9]))) for x in range(0, 81, 9)]))
+  print("Is original sudoku solved? True/False\n", sudoku.isSolved())
+  print("Solved sudoku:\n", sudoku.solve(last))
+  print(
+    "Is solved sudoku actually solved? (If not the sudoku was unsolvable): True / False:\n",
+    sudoku.isSolved())
   f.close()
 
 
