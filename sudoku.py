@@ -9,27 +9,27 @@ class Sudoku:
 
   def around(self, y, x):
     coordX, coordY = x / 3, y / 3
-    if coordX > 2:
+    if coordX >= 2:
       coordX = 7
-      if coordY > 2:
+      if coordY >= 2:
         coordY = 7
-      elif coordY > 1:
+      elif coordY >= 1:
         coordY = 4
       else:
         coordY = 1
-    elif coordX > 1:
+    elif coordX >= 1:
       coordX = 4
-      if coordY > 2:
+      if coordY >= 2:
         coordY = 7
-      elif coordY > 1:
+      elif coordY >= 1:
         coordY = 4
       else:
         coordY = 1
     else:
       coordX = 1
-      if coordY > 2:
+      if coordY >= 2:
         coordY = 7
-      elif coordY > 1:
+      elif coordY >= 1:
         coordY = 4
       else:
         coordY = 1
@@ -65,8 +65,7 @@ class Sudoku:
         return True
 
   def solve(self, end):
-    if self.find(end):
-      print("Hello World")
+    self.find(end)
     return self.grid
 
   def isSolved(self):
