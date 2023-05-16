@@ -62,6 +62,7 @@ class Sudoku:
         else:
           self.grid[index] = 0
           return False
+        return True
 
   def solve(self, end):
     if self.find(end):
