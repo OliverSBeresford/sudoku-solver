@@ -1,10 +1,17 @@
 import numpy as np
 from sudoku import Sudoku
+import sys
 
 def main():
-  f = open("0.txt")
+  if len(sys.argv) < 2:
+      print("Using an example:\n")
+      input_file = "puzzles.txt"
+  else:
+    print("Using input:\n")
+    input_file = sys.argv[1]
+  input_file = open(input_file, "r")
   last = (0, 0)
-  sudoku = f.readline().strip()
+  sudoku = input_file.readline().strip()
   sudoku = Sudoku(np.array(
     [np.array(list(map(int, sudoku[x:x + 9]))) for x in range(0, 81, 9)]))
   print("Original sudoku:\n", sudoku.grid)
@@ -21,8 +28,9 @@ def main():
   print(
     "Is solved sudoku actually solved? (If not the sudoku was unsolvable): True / False:\n",
     sudoku.isSolved())
-  f.close()
+  input_file.close()
 
 
 if __name__ == "__main__":
   main()
+  
