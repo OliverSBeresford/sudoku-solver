@@ -65,7 +65,7 @@ This means a puzzle like this:
 To solve the puzzle, run the following command:
 
 ```shell
-python3 solver.py
+python3 main.py [input-file]
 ```
 The solution will be displayed in the console.
 
