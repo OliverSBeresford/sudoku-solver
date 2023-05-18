@@ -13,4 +13,5 @@ define function find: parameters: endIndex
       if repeat until i is 10 loop made it to the end without breaking:
         current square becomes empty again
         return False
-              
+     return True (this will happen when the function call on top of this one on the stack
+        returns True, so when the True is propagating through the stack
