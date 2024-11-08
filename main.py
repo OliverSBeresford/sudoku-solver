@@ -9,7 +9,13 @@ def main():
     else:
         print("Using input:\n")
         input_file = sys.argv[1]
-    input_file = open(input_file, "r")
+    try:
+        with open(input_file, "r") as f:
+            input_file = f
+    except:
+        print("Error opening file")
+        return 1
+    
     last = (0, 0)
     sudoku = input_file.readline().strip()
     sudoku = Sudoku(
