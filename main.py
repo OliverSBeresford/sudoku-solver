@@ -9,12 +9,9 @@ def main():
     else:
         print("Using input:\n")
         input_file = sys.argv[1]
-
-    input_file = None
     
     try:
-        with open(input_file, "r") as f:
-            input_file = f
+        input_file = open(input_file, "r")
     except:
         print("Error opening file")
         return 1
