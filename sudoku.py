@@ -16,44 +16,10 @@ class Sudoku:
             np.ndarray: Array with 9 squares around the square at (x, y)
         """
         # Getting the block that it's in, from (0, 0) to (2, 2)
-        coordX, coordY = x / 3, y / 3
+        coordX, coordY = x // 3, y // 3
         
-        # It's in the third column
-        if coordX >= 2:
-            coordX = 7
-            # Third row
-            if coordY >= 2:
-                coordY = 7
-            # Second row
-            elif coordY >= 1:
-                coordY = 4
-            # First row
-            else:
-                coordY = 1
-        # Second column
-        elif coordX >= 1:
-            coordX = 4
-            # Third row
-            if coordY >= 2:
-                coordY = 7
-            # Second row
-            elif coordY >= 1:
-                coordY = 4
-            # First row
-            else:
-                coordY = 1
-        # First column
-        else:
-            coordX = 1
-            # Third row
-            if coordY >= 2:
-                coordY = 7
-            # Second row
-            elif coordY >= 1:
-                coordY = 4
-            # First row
-            else:
-                coordY = 1
+        coordX = coordX * 3 + 1
+        coordY = coordY * 3 + 1
 
         # Returns a flattened array of the 8 squares surrounding the square at (x, y)        
         return np.array([
