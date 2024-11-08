@@ -1,7 +1,6 @@
 import numpy as np
 import sys
 
-
 class Sudoku:
     def __init__(self, grid):
         self.grid = grid
