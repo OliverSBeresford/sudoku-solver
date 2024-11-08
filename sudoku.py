@@ -6,6 +6,15 @@ class Sudoku:
         self.grid = grid
 
     def around(self, y, x):
+        """Returns a flattened array of the squares surrounding and including a target square at (x, y)
+
+        Args:
+            y (int): The square's row
+            x (int): The square's column
+
+        Returns:
+            np.ndarray: Array with 9 squares around the square at (x, y)
+        """
         # Getting the block that it's in, from (0, 0) to (2, 2)
         coordX, coordY = x / 3, y / 3
         
@@ -53,6 +62,16 @@ class Sudoku:
         ])
 
     def check(self, y, x, num):
+        """Check if a square is incorrectly placed
+
+        Args:
+            y (int): The square's row
+            x (int): The square's column
+            num (int): The number in the squre stored at (x, y)
+
+        Returns:
+            bool: True if the square is not violating rules, False if it is
+        """
         # There is more than one occurence of num in the 9-square box
         if np.count_nonzero(self.around(y, x) == num) > 1:
             return False
@@ -62,6 +81,14 @@ class Sudoku:
         return True
 
     def find(self, end):
+        """Recursive function that tracks backwards and forwards to test possibilities of numbers in empty squares
+
+        Args:
+            end (tuple): coordinates (y, x) of the last empty square in the gri
+
+        Returns:
+            bool: True if the entire puzzle was completed successfully, False if no number works for a square
+        """
         for index, num in np.ndenumerate(self.grid):
             # For every box, if it is empty
             if num == 0:
@@ -86,13 +113,26 @@ class Sudoku:
                     return False
 
     def solve(self, end):
+        """Solves the sudoku grid in-place
+
+        Args:
+            end (tuple): (y,x) of the last empty square in the grid
+
+        Returns:
+            np.ndarray: The solved sudoku grid
+        """
         self.find(end)
         return self.grid
 
     def isSolved(self):
+        """Function to check if the sudoku is solved or not
+
+        Returns:
+            bool: True if it's solved, false if not
+        """
         for row in range(self.grid.shape[0]):
             for col in range(self.grid.shape[1]):
                 num = self.grid[row, col]
-                if not num or not self.check(col, row, num):
+                if num == 0 or not self.check(col, row, num):
                     return False
         return True
