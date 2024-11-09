@@ -45,7 +45,7 @@ def main():
     YELLOW = '\033[33m' # orange on some systems
     WHITE = '\033[97m'
 
-    RESET = '\033[0m' # called to return to standard terminal text color
+    RESET = '\033[0m' # used to return to standard terminal text color
     
     print("Original sudoku:\n", sudoku.grid)
     solved = sudoku.isSolved()
