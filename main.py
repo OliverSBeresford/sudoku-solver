@@ -51,7 +51,7 @@ def main():
     solved = sudoku.isSolved()
     print(f"Is original sudoku solved? True / False:\n>{YELLOW if solved else WHITE} {solved}{RESET}")
     
-    print(f"{RESET}Solved sudoku:\n{sudoku.solve(last)}")
+    print(f"Solved sudoku:\n{sudoku.solve(last)}")
     solved = sudoku.isSolved()
     print(f"Was the sudoku solvable? True / False:\n>{GREEN if solved else RED} {solved}{RESET}")
     
