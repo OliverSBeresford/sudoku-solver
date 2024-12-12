@@ -1,33 +1,28 @@
 import numpy as np
 from sudoku import Sudoku
 import sys
+from interface import Interface
 
 def main():
     # User passed no arguments
     if len(sys.argv) < 2:
-        print("Using an example:\n")
-        input_file = "puzzles.txt"
+        print("Using input:\n")
+        interface = Interface(9, 600, 600)
+        sudoku_grid = interface.get_board()
     # Using the first argument (after the python file name) as input
     else:
-        print("Using input:\n")
-        input_file = sys.argv[1]
-    
-    # Opening the text file
-    try:
-        input_file = open(input_file, "r")
-    except:
-        print("Error opening file")
-        return 1
-    
-    # Initializing last, just in case
-    last = (0, 0)
-    sudoku = input_file.readline().strip()
-    # Initializes a Sudoku object with the grid corresponding to the first line of the input file
-    sudoku = Sudoku(
-        np.array(
+        print("Using argument:\n")
+        with open(sys.argv[1], 'r') as input_file:
+            sudoku = input_file.readline().strip()
+        
+        # Initializing last, just in case
+        last = (0, 0)
+        
+        sudoku_grid = np.array(
             [np.array(list(map(int, sudoku[x:x + 9])))for x in range(0, 81, 9)]
         )
-    )
+    # Initializes a Sudoku object with the grid corresponding to the first line of the input file
+    sudoku = Sudoku(sudoku_grid)
     
     # Finding the last empty square of the sudoku board (see find function)
     for y in range(8, -1, -1):
@@ -55,7 +50,8 @@ def main():
     solved = sudoku.isSolved()
     print(f"Was the sudoku solvable? True / False:\n>{GREEN if solved else RED} {solved}{RESET}")
     
-    input_file.close()
+    interface = Interface(9, 600, 600)
+    sudoku_grid = interface.show_board(sudoku.grid)
 
 
 if __name__ == "__main__":
