@@ -15,7 +15,7 @@ class Interface:
         black = (0, 0, 0)
         white = (255, 255, 255)
         gray = (200, 200, 200)
-        blue = (0, 0, 255)
+        blue = (164, 183, 240)
 
         # Create the screen
         screen = pygame.display.set_mode((self.width, self.height))
@@ -46,7 +46,7 @@ class Interface:
 
         # Function to highlight the selected cell
         def highlight_cell(row, col):
-            pygame.draw.rect(screen, blue, (col * self.cell_size, row * self.cell_size, self.cell_size, self.cell_size), 2)
+            pygame.draw.rect(screen, blue, (col * self.cell_size + 1, row * self.cell_size + 1, self.cell_size - 1, self.cell_size - 1), 0)
 
         clock = pygame.time.Clock()
 
@@ -78,9 +78,9 @@ class Interface:
 
             screen.fill(white)
             draw_grid()
-            draw_numbers()
             if selected_cell:
                 highlight_cell(*selected_cell)
+            draw_numbers()
             pygame.display.flip()
 
         pygame.quit()
