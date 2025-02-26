@@ -50,7 +50,7 @@ class Sudoku:
         """Recursive function that tracks backwards and forwards to test possibilities of numbers in empty squares
 
         Args:
-            end (tuple): coordinates (y, x) of the last empty square in the gri
+            end (tuple): coordinates (y, x) of the last empty square in the grid
 
         Returns:
             bool: True if the entire puzzle was completed successfully, False if no number works for a square
