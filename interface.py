@@ -70,18 +70,20 @@ class Interface:
                         row, col = selected_cell
                         sudoku_grid[row][col] = event.key - pygame.K_0
                         col += 1
+                    if selected_cell is not None and event.key >= pygame.K_KP0 and event.key <= pygame.K_KP9:
+                        row, col = selected_cell
+                        sudoku_grid[row][col] = event.key - pygame.K_KP0
+                        col += 1
                     elif event.key == pygame.K_TAB or event.key == pygame.K_SPACE:
                         col += 1
                         selected_cell = (row, col)
                     elif event.key == pygame.K_RETURN:
                         running = False
-                    elif event.key == pygame.K_BACKSPACE:
+                    elif event.key == pygame.K_BACKSPACE or event.key == pygame.K_DELETE:
                         row, col = selected_cell
                         if sudoku_grid[row][col] == 0:
                             col -= 1
                         sudoku_grid[row][col] = 0
-                    elif event.key == pygame.K_DELETE:
-                        sudoku_grid = np.zeros((9, 9), dtype=int)
                     elif event.key == pygame.K_ESCAPE:
                         pygame.quit()
                         return None
