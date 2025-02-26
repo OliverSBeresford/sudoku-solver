@@ -53,10 +53,11 @@ class Interface:
         # Main game loop
         running = True
         selected_cell = None
+        row = col = 0
         while running:
             # Cap the frame rate to 60 FPS
             dt = clock.tick(60)
-            row = col = 0
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
@@ -65,16 +66,47 @@ class Interface:
                     row, col = y // self.cell_size, x // self.cell_size
                     selected_cell = (row, col)
                 elif event.type == pygame.KEYDOWN:
-                    if selected_cell is not None and event.key >= pygame.K_1 and event.key <= pygame.K_9:
+                    if selected_cell is not None and event.key >= pygame.K_0 and event.key <= pygame.K_9:
                         row, col = selected_cell
                         sudoku_grid[row][col] = event.key - pygame.K_0
-                    elif event.key == pygame.K_TAB:
-                        if row < 9:
-                            col += 1
-                        elif col < 9:
-                            row += 1
-                            col = 0
+                        col += 1
+                    elif event.key == pygame.K_TAB or event.key == pygame.K_SPACE:
+                        col += 1
                         selected_cell = (row, col)
+                    elif event.key == pygame.K_RETURN:
+                        running = False
+                    elif event.key == pygame.K_BACKSPACE:
+                        row, col = selected_cell
+                        sudoku_grid[row][col] = 0
+                    elif event.key == pygame.K_DELETE:
+                        sudoku_grid = np.zeros((9, 9), dtype=int)
+                    elif event.key == pygame.K_ESCAPE:
+                        pygame.quit()
+                        return None
+                    elif event.key == pygame.K_UP:
+                        row -= 1
+                        
+                    elif event.key == pygame.K_DOWN:
+                        row += 1
+                        
+                    elif event.key == pygame.K_LEFT:
+                        col -= 1
+                        
+                    elif event.key == pygame.K_RIGHT:
+                        col += 1
+                    
+                    if col < 0:
+                        col = 8
+                        row -= 1
+                    elif col > 8: 
+                        col = 0
+                        row += 1
+                    if row < 0:
+                        row = 8
+                    elif row > 8:
+                        row = 0
+
+                    selected_cell = (row, col)
 
             screen.fill(white)
             draw_grid()
