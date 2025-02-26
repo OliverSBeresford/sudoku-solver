@@ -4,13 +4,14 @@ This project is a Sudoku solver that uses a backtracking algorithm to find the s
 ## Prerequisites
 
 - Python 3.6 or above should be installed on your system. If Python is not installed, you can download it from the official Python website: [https://www.python.org/downloads/](https://www.python.org/downloads/)
+- You should probably have a version of python between 3.6 and 3.12, because 3.12 has not been tested
 
 ## Installation
 
 1. Clone the repository:
 
    ```shell
-   git clone https://github.com/your/repository.git
+   git clone https://github.com/OliverSBeresford/sudoku-solver.git
 
 2. Navigate to the project directory:
    ```shell
@@ -37,7 +38,7 @@ On macOS and Linux:
     pip install -r requirements.txt
 This will install all the necessary dependencies for the project.
 
-# Usage
+# Usage (Command Line)
 
 To solve a Sudoku puzzle, you need to provide the puzzle as input in a specific format. The puzzle should be a text file where each row represents a sudoku in the
 sudoku grid. The format would be 0 for empty and a number from 1 to 9 for a filled
@@ -99,6 +100,10 @@ On Windows:
 ```shell
 rmdir /s /q venv
 ```
+
+# Usage (Visual)
+
+You can also just use a visual editor if you run the program without command line arguments and without specifying a file. You can use arrows, number keys and backspace to move around.
 
 ## License
 
