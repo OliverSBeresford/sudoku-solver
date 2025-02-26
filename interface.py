@@ -77,6 +77,8 @@ class Interface:
                         running = False
                     elif event.key == pygame.K_BACKSPACE:
                         row, col = selected_cell
+                        if sudoku_grid[row][col] == 0:
+                            col -= 1
                         sudoku_grid[row][col] = 0
                     elif event.key == pygame.K_DELETE:
                         sudoku_grid = np.zeros((9, 9), dtype=int)
