@@ -54,21 +54,29 @@ def detect_sudoku_grid(image_path, output_folder='sudoku_squares', debug_enabled
             cv2.waitKey(0)
             cv2.destroyAllWindows()
 
-        grid_contours, _ = cv2.findContours(grid_edged, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        grid_contours, _ = cv2.findContours(grid_edged, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
         grid_contours = sorted(grid_contours, key=cv2.contourArea, reverse=True)
 
         # Detect each square one at a time
         squares = []
+        expected_square_area = (grid.shape[0] // 9) * (grid.shape[1] // 9)  # Expected area of each square
+        min_distance = grid.shape[0] // 18  # Minimum distance between squares to consider them different
         for contour in grid_contours:
             peri = cv2.arcLength(contour, True)
             approx = cv2.approxPolyDP(contour, 0.02 * peri, True)
             if len(approx) == 4:
                 gx, gy, gw, gh = cv2.boundingRect(approx)
-                square = grid[gy:gy+gh, gx:gx+gw]
-                squares.append((gx, gy, square))
+                if 0.5 * expected_square_area < gw * gh < 1.5 * expected_square_area:  # Ensure the contour is of similar size
+                    square = grid[gy:gy+gh, gx:gx+gw]
+                    if all(np.linalg.norm(np.array([gx, gy]) - np.array([sx, sy])) > min_distance for sx, sy, _ in squares):
+                        squares.append((gx, gy, square))
 
         # Sort squares by their position
         squares.sort(key=lambda s: (s[1] // (grid.shape[0] // 9), s[0] // (grid.shape[1] // 9)))
+
+        # Ensure we have exactly 81 squares
+        if len(squares) != 81:
+            raise ValueError(f"Expected 81 squares, but found {len(squares)}.")
 
         # Save squares in the correct order
         for i, (gx, gy, square) in enumerate(squares):
@@ -85,6 +93,6 @@ def detect_sudoku_grid(image_path, output_folder='sudoku_squares', debug_enabled
 # Example usage
 if __name__ == "__main__":
     try:
-        detect_sudoku_grid('sudoku_image.png', debug_enabled=True)
+        detect_sudoku_grid('Sudoku9.jpg', debug_enabled=True)
     except (FileNotFoundError, ValueError) as e:
         print(e)
