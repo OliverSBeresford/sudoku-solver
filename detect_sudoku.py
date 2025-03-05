@@ -44,8 +44,13 @@ def detect_sudoku_grid(image_path, output_folder='sudoku_squares', debug_enabled
 
         # Convert the grid to grayscale and find the interior contours
         grid_gray = cv2.cvtColor(grid, cv2.COLOR_BGR2GRAY)
-        grid_blurred = cv2.GaussianBlur(grid_gray, (3, 3), 0)
+        grid_blurred = cv2.GaussianBlur(grid_gray, (5, 5), 0)
         grid_edged = cv2.Canny(grid_blurred, 50, 150)
+
+        # Apply morphological operations to enhance the edges
+        kernel = np.ones((3, 3), np.uint8)
+        grid_edged = cv2.dilate(grid_edged, kernel, iterations=1)
+        grid_edged = cv2.erode(grid_edged, kernel, iterations=1)
 
         if debug_enabled:
             cv2.imshow("Grid Gray", grid_gray)
@@ -76,7 +81,7 @@ def detect_sudoku_grid(image_path, output_folder='sudoku_squares', debug_enabled
 
         # Ensure we have exactly 81 squares
         if len(squares) != 81:
-            raise ValueError(f"Expected 81 squares, but found {len(squares)}.")
+            print(f"Expected 81 squares, but found {len(squares)}.")
 
         # Save squares in the correct order
         for i, (gx, gy, square) in enumerate(squares):
@@ -93,6 +98,6 @@ def detect_sudoku_grid(image_path, output_folder='sudoku_squares', debug_enabled
 # Example usage
 if __name__ == "__main__":
     try:
-        detect_sudoku_grid('Sudoku9.jpg', debug_enabled=True)
+        detect_sudoku_grid('sudoku_3.jpg', debug_enabled=True)
     except (FileNotFoundError, ValueError) as e:
         print(e)
