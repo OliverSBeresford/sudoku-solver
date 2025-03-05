@@ -72,7 +72,7 @@ def detect_sudoku_grid(image_path, output_folder='sudoku_squares', debug_enabled
                         squares.append((gx, gy, square))
 
         # Sort squares by their position
-        squares.sort(key=lambda s: (s[1] // (grid.shape[0] // 9), s[0] // (grid.shape[1] // 9)))
+        squares.sort(key=lambda s: (s[1], s[0]))
 
         # Ensure we have exactly 81 squares
         if len(squares) != 81:
