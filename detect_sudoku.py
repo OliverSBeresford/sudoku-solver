@@ -85,6 +85,8 @@ def detect_sudoku_grid(image_path, output_folder='sudoku_squares', debug_enabled
 
         # Save squares in the correct order
         for i, (gx, gy, square) in enumerate(squares):
+            # Preprocess the image for consistency with template matching
+            square = cv2.resize(square, (28, 28))
             cv2.imwrite(os.path.join(output_folder, f'square_{i}.png'), square)
             if debug_enabled:
                 cv2.imshow(f'Square {i}', square)
