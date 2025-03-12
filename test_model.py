@@ -17,8 +17,8 @@ loss, accuracy = model.evaluate(x_test, y_test, verbose=2)
 print(f"Model Test Accuracy: {accuracy * 100:.2f}%")
 
 # Predict first 10 images
-predictions = model.predict(x_test[:10])
+predictions = model.predict(x_test[:20])
 predicted_labels = np.argmax(predictions, axis=1)
 
 print("Predicted labels:", predicted_labels)
-print("Actual labels:   ", y_test[:10])
+print("Actual labels:   ", y_test[:20])
