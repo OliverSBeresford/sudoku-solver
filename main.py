@@ -2,6 +2,8 @@ import numpy as np
 from sudoku import Sudoku
 import sys
 from interface import Interface
+from detect_sudoku import detect_sudoku_grid
+from detect_grid import load_and_predict_squares
 
 def main():
     # User passed no arguments
@@ -12,15 +14,12 @@ def main():
     # Using the first argument (after the python file name) as input
     else:
         print("Using argument:\n")
-        with open(sys.argv[1], 'r') as input_file:
-            sudoku = input_file.readline().strip()
+        detect_sudoku_grid(sys.argv[1], debug_enabled=False)
+        sudoku_grid = load_and_predict_squares("sudoku_squares", debug_enabled=False)
         
         # Initializing last, just in case
         last = (0, 0)
         
-        sudoku_grid = np.array(
-            [np.array(list(map(int, sudoku[x:x + 9])))for x in range(0, 81, 9)]
-        )
     # Initializes a Sudoku object with the grid corresponding to the first line of the input file
     sudoku = Sudoku(sudoku_grid)
     
