@@ -111,6 +111,6 @@ def detect_sudoku_grid(image_path, output_folder='sudoku_squares', debug_enabled
 # Example usage
 if __name__ == "__main__":
     try:
-        detect_sudoku_grid('Sudoku9.jpg', debug_enabled=True)
+        detect_sudoku_grid('sudoku.jpg', debug_enabled=True)
     except (FileNotFoundError, ValueError) as e:
         print(e)
