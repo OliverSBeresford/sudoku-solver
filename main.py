@@ -14,8 +14,8 @@ def main():
     # Using the first argument (after the python file name) as input
     else:
         print("Using argument:\n")
-        detect_sudoku_grid(sys.argv[1])
-        sudoku_grid = load_and_predict_squares("sudoku_squares")
+        detect_sudoku_grid(sys.argv[1], debug_enabled=False)
+        sudoku_grid = load_and_predict_squares("sudoku_squares", debug_enabled=False)
         
         # Initializing last, just in case
         last = (0, 0)
