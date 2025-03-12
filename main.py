@@ -24,14 +24,8 @@ def main():
     sudoku = Sudoku(sudoku_grid)
     
     # Finding the last empty square of the sudoku board (see find function)
-    for y in range(8, -1, -1):
-        for x in range(8, -1, -1):
-            if sudoku.grid[y][x] == 0:
-                last = (y, x)
-                break
-        else:
-            continue
-        break
+    last = tuple(np.argwhere(sudoku.grid == 0)[-1])
+    print(f"Last empty square: {last}")
     
     # Colors needed for printing to the terminal
     RED = '\033[31m'
