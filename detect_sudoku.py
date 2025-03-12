@@ -76,8 +76,8 @@ def detect_sudoku_grid(image_path, output_folder='sudoku_squares', debug_enabled
                     if all(np.linalg.norm(np.array([gx, gy]) - np.array([sx, sy])) > min_distance for sx, sy, _ in squares):
                         squares.append((gx, gy, square))
 
-        # Sort squares by their position
-        squares.sort(key=lambda s: (s[1] // (grid.shape[0] // 9), s[0] // (grid.shape[1] // 9)))
+        # Sort squares by their position, accounting for grid warping
+        squares.sort(key=lambda s: (round(s[1] / (grid.shape[0] // 9)), round(s[0] / (grid.shape[1] // 9))))
 
         # Ensure we have exactly 81 squares
         if len(squares) != 81:
@@ -111,6 +111,6 @@ def detect_sudoku_grid(image_path, output_folder='sudoku_squares', debug_enabled
 # Example usage
 if __name__ == "__main__":
     try:
-        detect_sudoku_grid('sudoku_3.jpg', debug_enabled=False)
+        detect_sudoku_grid('Sudoku9.jpg', debug_enabled=True)
     except (FileNotFoundError, ValueError) as e:
         print(e)
