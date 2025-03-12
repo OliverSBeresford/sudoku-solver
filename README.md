@@ -40,39 +40,13 @@ This will install all the necessary dependencies for the project.
 
 # Usage (Command Line)
 
-To solve a Sudoku puzzle, you need to provide the puzzle as input in a specific format. The puzzle should be a text file where each row represents a sudoku in the
-sudoku grid. The format would be 0 for empty and a number from 1 to 9 for a filled
-square with that number
+To solve a Sudoku puzzle, you can provide an image of the puzzle as a command line argument. If an image is provided, the program will use it for Sudoku solving. If not, it will open an empty board and you can enter the digits with the number keys, number pad, space, tab, etc.
 
-Example input file (puzzle.txt):
-
-020000000604002030000150040002080070009706800070010300090071000010300607000000080
-
-
-This means a puzzle like this:
-
-```
-0 2 0 0 0 0 0 0 0
-6 0 4 0 0 2 0 3 0
-0 0 0 1 5 0 0 4 0
-0 0 2 0 8 0 0 7 0
-0 0 9 7 0 6 8 0 0
-0 7 0 0 1 0 3 0 0
-0 9 0 0 7 1 0 0 0
-0 1 0 3 0 0 6 0 7
-0 0 0 0 0 0 0 8 0
-```
-
-To solve the puzzle, run the following command:
+Example command with an image:
 
 ```shell
-python3 main.py [input-file]
+python3 main.py [image-file]
 ```
-The solution will be displayed in the console.
-
-The puzzles.txt file is given as example input, and it comes with some examples.
-If you would like to solve your own puzzles, create a new text file, and 
-add your puzzle to it, then put it as a parameter when you run the file.
 
 Once you're done, you can exit the venv:
 
@@ -103,7 +77,7 @@ rmdir /s /q venv
 
 # Usage (Visual)
 
-You can also just use a visual editor if you run the program without command line arguments and without specifying a file. You can use arrows, number keys and backspace to move around.
+You can also just use a visual editor if you run the program without command line arguments and without specifying a file. You can use arrows, number keys and backspace to move around. Click 'x' to exit and solve the Sudoku.
 
 ## License
 
