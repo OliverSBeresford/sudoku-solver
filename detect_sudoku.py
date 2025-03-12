@@ -4,6 +4,11 @@ import os
 import shutil
 
 def detect_sudoku_grid(image_path, output_folder='sudoku_squares', debug_enabled=False):
+    # Delete output folder if it exists
+    if os.path.exists(output_folder):
+        shutil.rmtree(output_folder)
+    os.makedirs(output_folder)
+
     # Load the image
     image = cv2.imread(image_path)
     if image is None:
@@ -23,11 +28,6 @@ def detect_sudoku_grid(image_path, output_folder='sudoku_squares', debug_enabled
     # Find contours
     contours, _ = cv2.findContours(edged, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     contours = sorted(contours, key=cv2.contourArea, reverse=True)
-
-    # Delete output folder if it exists
-    if os.path.exists(output_folder):
-        shutil.rmtree(output_folder)
-    os.makedirs(output_folder)
 
     # Use the largest contour as the whole grid
     grid_contour = contours[0]
@@ -77,7 +77,7 @@ def detect_sudoku_grid(image_path, output_folder='sudoku_squares', debug_enabled
                         squares.append((gx, gy, square))
 
         # Sort squares by their position
-        squares.sort(key=lambda s: (s[1], s[0]))
+        squares.sort(key=lambda s: (s[1] // (grid.shape[0] // 9), s[0] // (grid.shape[1] // 9)))
 
         # Ensure we have exactly 81 squares
         if len(squares) != 81:
@@ -87,11 +87,22 @@ def detect_sudoku_grid(image_path, output_folder='sudoku_squares', debug_enabled
         for i, (gx, gy, square) in enumerate(squares):
             # Preprocess the image for consistency with template matching
             square = cv2.resize(square, (28, 28))
-            cv2.imwrite(os.path.join(output_folder, f'square_{i}.png'), square)
-            if debug_enabled:
-                cv2.imshow(f'Square {i}', square)
-                cv2.waitKey(0)
-                cv2.destroyAllWindows()
+            row = i // 9
+            col = i % 9
+            cv2.imwrite(os.path.join(output_folder, f'square_{row}_{col}.png'), square)
+
+        # Compile all images into one grid for debugging
+        if debug_enabled:
+            grid_image = np.zeros((28 * 9, 28 * 9), dtype=np.uint8)
+            for row in range(9):
+                for col in range(9):
+                    square_path = os.path.join(output_folder, f'square_{row}_{col}.png')
+                    if os.path.exists(square_path):
+                        square_img = cv2.imread(square_path, cv2.IMREAD_GRAYSCALE)
+                        grid_image[row * 28:(row + 1) * 28, col * 28:(col + 1) * 28] = square_img
+            cv2.imshow("Compiled Grid", grid_image)
+            cv2.waitKey(0)
+            cv2.destroyAllWindows()
 
         return squares
 
@@ -100,6 +111,6 @@ def detect_sudoku_grid(image_path, output_folder='sudoku_squares', debug_enabled
 # Example usage
 if __name__ == "__main__":
     try:
-        detect_sudoku_grid('sudoku_3.jpg', debug_enabled=True)
+        detect_sudoku_grid('sudoku_3.jpg', debug_enabled=False)
     except (FileNotFoundError, ValueError) as e:
         print(e)
