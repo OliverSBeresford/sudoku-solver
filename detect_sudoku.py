@@ -34,11 +34,33 @@ def detect_sudoku_grid(image_path, output_folder='sudoku_squares', debug_enabled
     peri = cv2.arcLength(grid_contour, True)
     approx = cv2.approxPolyDP(grid_contour, 0.02 * peri, True)
     if len(approx) == 4:
-        x, y, w, h = cv2.boundingRect(approx)
-        grid = image[y:y+h, x:x+w]
+        # Warp the grid into a square
+        pts = approx.reshape(4, 2)
+        rect = np.zeros((4, 2), dtype="float32")
+
+        s = pts.sum(axis=1)
+        rect[0] = pts[np.argmin(s)]
+        rect[2] = pts[np.argmax(s)]
+
+        diff = np.diff(pts, axis=1)
+        rect[1] = pts[np.argmin(diff)]
+        rect[3] = pts[np.argmax(diff)]
+
+        (tl, tr, br, bl) = rect
+        maxWidth = max(int(np.linalg.norm(br - bl)), int(np.linalg.norm(tr - tl)))
+        maxHeight = max(int(np.linalg.norm(tr - br)), int(np.linalg.norm(tl - bl)))
+
+        dst = np.array([
+            [0, 0],
+            [maxWidth - 1, 0],
+            [maxWidth - 1, maxHeight - 1],
+            [0, maxHeight - 1]], dtype="float32")
+
+        M = cv2.getPerspectiveTransform(rect, dst)
+        grid = cv2.warpPerspective(image, M, (maxWidth, maxHeight))
 
         if debug_enabled:
-            cv2.imshow("Grid", grid)
+            cv2.imshow("Warped Grid", grid)
             cv2.waitKey(0)
             cv2.destroyAllWindows()
 
@@ -49,8 +71,8 @@ def detect_sudoku_grid(image_path, output_folder='sudoku_squares', debug_enabled
 
         # Apply morphological operations to enhance the edges
         kernel = np.ones((3, 3), np.uint8)
-        grid_edged = cv2.dilate(grid_edged, kernel, iterations=1)
-        grid_edged = cv2.erode(grid_edged, kernel, iterations=1)
+        grid_edged = cv2.dilate(grid_edged, kernel, iterations=2)
+        grid_edged = cv2.erode(grid_edged, kernel, iterations=2)
 
         if debug_enabled:
             cv2.imshow("Grid Gray", grid_gray)
