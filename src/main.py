@@ -15,7 +15,7 @@ def main():
     else:
         print("Using argument:\n")
         detect_sudoku_grid(sys.argv[1], debug_enabled=False if len(sys.argv) < 3 else bool(sys.argv[2]))
-        sudoku_grid = load_and_predict_squares("sudoku_squares", debug_enabled=False if len(sys.argv) < 3 else bool(sys.argv[2]))
+        sudoku_grid = load_and_predict_squares("data/sudoku_squares", debug_enabled=False if len(sys.argv) < 3 else bool(sys.argv[2]))
         
         # Initializing last, just in case
         last = (0, 0)
@@ -43,10 +43,13 @@ def main():
     solved = sudoku.isSolved()
     print(f"Was the sudoku solvable? True / False:\n>{GREEN if solved else RED} {solved}{RESET}")
     
+    # Export solved sudoku grid to numpy array
+    np.save('data/solved_sudoku.npy', sudoku.grid)
+    
     interface = Interface(9, 600, 600)
     sudoku_grid = interface.show_board(sudoku.grid)
 
 
 if __name__ == "__main__":
   main()
-  
+
