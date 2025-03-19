@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import os
 import shutil
+import json  # Add import for JSON
 
 def detect_sudoku_grid(image_path, output_folder='sudoku_squares', debug_enabled=False):
     # Delete output folder if it exists
@@ -106,12 +107,25 @@ def detect_sudoku_grid(image_path, output_folder='sudoku_squares', debug_enabled
             print(f"Expected 81 squares, but found {len(squares)}.")
 
         # Save squares in the correct order
+        metadata = []  # Initialize metadata list
         for i, (gx, gy, square) in enumerate(squares):
-            # Preprocess the image for consistency with template matching
             square = cv2.resize(square, (28, 28))
             row = i // 9
             col = i % 9
             cv2.imwrite(os.path.join(output_folder, f'square_{row}_{col}.png'), square)
+            # Append metadata for each square
+            metadata.append({
+                'row': row,
+                'col': col,
+                'x': int(gx),
+                'y': int(gy),
+                'width': int(square.shape[1]),
+                'height': int(square.shape[0])
+            })
+
+        # Save metadata to a JSON file
+        with open(os.path.join(output_folder, 'metadata.json'), 'w') as f:
+            json.dump(metadata, f, indent=4)
 
         # Compile all images into one grid for debugging
         if debug_enabled:
