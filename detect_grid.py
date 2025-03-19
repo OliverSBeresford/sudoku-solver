@@ -8,7 +8,7 @@ def load_and_predict_squares(squares_folder, debug_enabled=False):
     sudoku_grid = np.zeros((9, 9), dtype=int)
 
     # Configure Tesseract to recognize only digits
-    custom_config = r'--oem 3 --psm 10 -c tessedit_char_whitelist=0123456789'
+    custom_config = r'--oem 3 --psm 10 -c tessedit_char_whitelist=123456789'
 
     # Iterate through the saved square images
     for row in range(9):
@@ -24,13 +24,6 @@ def load_and_predict_squares(squares_folder, debug_enabled=False):
                         sudoku_grid[row, col] = int(digit)
                     else:
                         sudoku_grid[row, col] = 0
-
-                    # Debugging display
-                    if debug_enabled:
-                        print(f"Square {row}_{col}: Recognized digit {digit}")
-                        cv2.imshow(f"Square {row}_{col}", img)
-                        cv2.waitKey(0)
-                        cv2.destroyAllWindows()
                 else:
                     print(f"Could not read square {row}_{col}.")
             else:
