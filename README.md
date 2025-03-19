@@ -45,7 +45,7 @@ To solve a Sudoku puzzle, you can provide an image of the puzzle as a command li
 Example command with an image:
 
 ```shell
-python3 main.py [image-file]
+python3 src/main.py [image-file]
 ```
 
 Once you're done, you can exit the venv:
