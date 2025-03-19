@@ -33,6 +33,6 @@ def load_and_predict_squares(squares_folder, debug_enabled=False):
 
 # Example usage
 if __name__ == "__main__":
-    squares_folder = "sudoku_squares"
+    squares_folder = "..data/sudoku_squares"
     sudoku_grid = load_and_predict_squares(squares_folder, debug_enabled=False)
     print(sudoku_grid)

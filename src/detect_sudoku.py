@@ -4,7 +4,7 @@ import os
 import shutil
 import json  # Add import for JSON
 
-def detect_sudoku_grid(image_path, output_folder='data/sudoku_squares', debug_enabled=False):
+def detect_sudoku_grid(image_path, output_folder='../data/sudoku_squares', debug_enabled=False):
     # Delete output folder if it exists
     if os.path.exists(output_folder):
         shutil.rmtree(output_folder)
