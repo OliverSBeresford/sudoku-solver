@@ -3,8 +3,8 @@ This project is a Sudoku solver that uses a backtracking algorithm to find the s
 
 ## Prerequisites
 
-- Python 3.6 or above should be installed on your system. If Python is not installed, you can download it from the official Python website: [https://www.python.org/downloads/](https://www.python.org/downloads/)
-- You should probably have a version of python between 3.6 and 3.12, because 3.12 has not been tested
+- Python 3.8 or above should be installed on your system (or you should be able to make a virtual environment of version 3.8 or above). If Python is not installed, you can download it from the official Python website: [https://www.python.org/downloads/](https://www.python.org/downloads/)
+- You should probably have a version of python between 3.8 and 3.12, because 3.12 has not been tested
 
 ## Installation
 
