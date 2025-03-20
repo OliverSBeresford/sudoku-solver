@@ -12,33 +12,40 @@ This project is a Sudoku solver that uses a backtracking algorithm to find the s
 
    ```shell
    git clone https://github.com/OliverSBeresford/sudoku-solver.git
+   ```
 
 2. Navigate to the project directory:
    ```shell
    cd sudoku-solver
-4. Create a virtual environment:
-On macOS and Linux:
-    ```shell
-    python3 -m venv venv
-    ```
-    On Windows:
-    
-    ```shell
-    py -m venv venv
-5. Activate the virtual environment:
-On macOS and Linux:
-    ```shell
-    source venv/bin/activate
-    ```
-    On Windows:
-    ```shell
-    venv\Scripts\activate
-6. Install the required packages:
-    ```shell
-    pip install -r requirements.txt
-This will install all the necessary dependencies for the project.
+   ```
 
-# Usage (Command Line)
+3. Create a virtual environment:
+   On macOS and Linux:
+   ```shell
+   python3 -m venv venv
+   ```
+   On Windows:
+   ```shell
+   py -m venv venv
+   ```
+
+4. Activate the virtual environment:
+   On macOS and Linux:
+   ```shell
+   source venv/bin/activate
+   ```
+   On Windows:
+   ```shell
+   venv\Scripts\activate
+   ```
+
+5. Install the required packages:
+   ```shell
+   pip install -r requirements.txt
+   ```
+   This will install all the necessary dependencies for the project.
+
+## Usage (Command Line)
 
 To solve a Sudoku puzzle, you can provide an image of the puzzle as a command line argument. If an image is provided, the program will use it for Sudoku solving. If not, it will open an empty board and you can enter the digits with the number keys, number pad, space, tab, etc.
 
@@ -48,7 +55,18 @@ Example command with an image:
 python3 src/main.py [image-file]
 ```
 
-Once you're done, you can exit the venv:
+You can also enable debug mode and specify a wait time before typing the Sudoku using the following flags:
+
+- `-d` or `--debug`: Enable debug mode.
+- `-t` or `--type`: Specify the wait time before typing the Sudoku (default is 3 seconds).
+
+Example command with debug mode and a specified wait time:
+
+```shell
+python3 src/main.py [image-file] -d -t 5
+```
+
+Once you're done, you can exit the virtual environment:
 
 On macOS and Linux:
 
@@ -75,7 +93,7 @@ On Windows:
 rmdir /s /q venv
 ```
 
-# Usage (Visual)
+## Usage (Visual)
 
 You can also just use a visual editor if you run the program without command line arguments and without specifying a file. You can use arrows, number keys and backspace to move around. Click 'x' to exit and solve the Sudoku.
 
