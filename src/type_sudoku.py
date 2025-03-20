@@ -10,7 +10,7 @@ def move_and_type_sudoku(sudoku_array_path, wait_time=3):
     time.sleep(wait_time)
     
     # Reduce the delay between key presses
-    pyautogui.PAUSE = 0.01
+    pyautogui.PAUSE = 0.000
     
     for row in range(9):
         # Alternate between moving left to right and right to left when it's even an od row respectively
