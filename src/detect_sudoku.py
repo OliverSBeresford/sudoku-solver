@@ -4,7 +4,7 @@ import os
 import shutil
 import json  # Add import for JSON
 
-def detect_sudoku_grid(image_path, output_folder='../data/sudoku_squares', debug_enabled=False):
+def detect_sudoku_grid(image_path, output_folder, debug_enabled=False):
     # Delete output folder if it exists
     if os.path.exists(output_folder):
         shutil.rmtree(output_folder)
@@ -110,6 +110,10 @@ def detect_sudoku_grid(image_path, output_folder='../data/sudoku_squares', debug
         metadata = []  # Initialize metadata list
         for i, (gx, gy, square) in enumerate(squares):
             square = cv2.resize(square, (28, 28))
+            # Check if the square is in "dark mode"
+            mean_intensity = np.mean(square)
+            if mean_intensity > 127:
+                square = cv2.bitwise_not(square)
             row = i // 9
             col = i % 9
             cv2.imwrite(os.path.join(output_folder, f'square_{row}_{col}.png'), square)

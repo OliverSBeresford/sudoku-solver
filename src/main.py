@@ -22,7 +22,7 @@ def main():
     else:
         print("Using argument:\n")
         detect_sudoku_grid(args.input, debug_enabled=args.debug)
-        sudoku_grid = load_and_predict_squares("../data/sudoku_squares", debug_enabled=args.debug)
+        sudoku_grid = load_and_predict_squares("./data/sudoku_squares", debug_enabled=args.debug)
         
         # Initializing last, just in case
         last = (0, 0)
