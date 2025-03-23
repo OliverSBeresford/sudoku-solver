@@ -4,7 +4,7 @@ import os
 import shutil
 import json  # Add import for JSON
 
-def detect_sudoku_grid(image_path, output_folder, debug_enabled=False):
+def detect_sudoku_grid(image_path, output_folder="./data/sudoku_squares", debug_enabled=False, dark_mode=False):
     # Delete output folder if it exists
     if os.path.exists(output_folder):
         shutil.rmtree(output_folder)
@@ -97,6 +97,8 @@ def detect_sudoku_grid(image_path, output_folder, debug_enabled=False):
                 if 0.5 * expected_square_area < gw * gh < 1.5 * expected_square_area:  # Ensure the contour is of similar size
                     square = grid[gy:gy+gh, gx:gx+gw]
                     if all(np.linalg.norm(np.array([gx, gy]) - np.array([sx, sy])) > min_distance for sx, sy, _ in squares):
+                        if dark_mode:
+                            square = cv2.bitwise_not(square)
                         squares.append((gx, gy, square))
 
         # Sort squares by their position, accounting for grid warping
@@ -110,10 +112,6 @@ def detect_sudoku_grid(image_path, output_folder, debug_enabled=False):
         metadata = []  # Initialize metadata list
         for i, (gx, gy, square) in enumerate(squares):
             square = cv2.resize(square, (28, 28))
-            # Check if the square is in "dark mode"
-            mean_intensity = np.mean(square)
-            if mean_intensity > 127:
-                square = cv2.bitwise_not(square)
             row = i // 9
             col = i % 9
             cv2.imwrite(os.path.join(output_folder, f'square_{row}_{col}.png'), square)
@@ -151,6 +149,6 @@ def detect_sudoku_grid(image_path, output_folder, debug_enabled=False):
 # Example usage
 if __name__ == "__main__":
     try:
-        detect_sudoku_grid('sudoku.jpg', debug_enabled=True)
+        detect_sudoku_grid('sudoku.jpg', debug_enabled=True, dark_mode=True)
     except (FileNotFoundError, ValueError) as e:
         print(e)

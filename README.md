@@ -55,15 +55,16 @@ Example command with an image:
 python3 src/main.py [image-file]
 ```
 
-You can also enable debug mode and specify a wait time before typing the Sudoku using the following flags:
+You can also enable debug mode, specify a wait time before typing the Sudoku, and enable dark mode using the following flags:
 
 - `-d` or `--debug`: Enable debug mode.
 - `-t` or `--type`: Specify the wait time before typing the Sudoku (default is 3 seconds).
+- `-m` or `--dark`: Enable dark mode for the Sudoku grid.
 
-Example command with debug mode and a specified wait time:
+Example command with debug mode, a specified wait time, and dark mode:
 
 ```shell
-python3 src/main.py [image-file] -d -t 5
+python3 src/main.py [image-file] -d -t 5 -m
 ```
 
 Once you're done, you can exit the virtual environment:
