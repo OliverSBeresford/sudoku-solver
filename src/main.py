@@ -61,7 +61,7 @@ def main():
     sudoku_grid = interface.show_board(sudoku.grid)
     
     # Move and type the sudoku using arrow keys and pyautogui
-    if args.type is not None:
+    if args.type is not None and solved:
         move_and_type_sudoku('data/solved_sudoku.npy', wait_time=args.type)
 
 if __name__ == "__main__":
