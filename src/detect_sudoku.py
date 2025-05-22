@@ -15,6 +15,11 @@ def detect_sudoku_grid(image_path, output_folder="./data/sudoku_squares", debug_
     if image is None:
         raise FileNotFoundError(f"Image file '{image_path}' not found or could not be loaded.")
     
+    # Raise contrast before converting to grayscale
+    alpha = 1  # Contrast control (1.0-3.0)
+    beta = 40     # Brightness control (0-100)
+    image = cv2.convertScaleAbs(image, alpha=alpha, beta=beta)
+    
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     blurred = cv2.GaussianBlur(gray, (5, 5), 0)
     edged = cv2.Canny(blurred, 50, 150)
