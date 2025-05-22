@@ -57,7 +57,7 @@ python3 src/main.py [image-file]
 
 You can also enable debug mode, specify a wait time before typing the Sudoku, and enable dark mode using the following flags:
 
-- `-d` or `--debug`: Enable debug mode.
+- `-d` or `--debug`: Enable debug mode. In debug mode, you will see images with the sudoku in each stage of the process. Click 1 to close each window.
 - `-t` or `--type`: Specify the wait time before typing the Sudoku (default is 3 seconds).
 - `-m` or `--dark`: Enable dark mode for the Sudoku grid.
 

@@ -20,9 +20,10 @@ def detect_sudoku_grid(image_path, output_folder="./data/sudoku_squares", debug_
     edged = cv2.Canny(blurred, 50, 150)
 
     if debug_enabled:
-        cv2.imshow("Gray", gray)
-        cv2.imshow("Blurred", blurred)
-        cv2.imshow("Edged", edged)
+        for win_name, img in [("Gray", gray), ("Blurred", blurred), ("Edged", edged)]:
+            cv2.namedWindow(win_name, cv2.WINDOW_NORMAL)
+            cv2.imshow(win_name, img)
+            cv2.waitKey(1)  # Allow window manager to render controls
         cv2.waitKey(0)
         cv2.destroyAllWindows()
 
@@ -61,7 +62,9 @@ def detect_sudoku_grid(image_path, output_folder="./data/sudoku_squares", debug_
         grid = cv2.warpPerspective(image, M, (maxWidth, maxHeight))
 
         if debug_enabled:
+            cv2.namedWindow("Warped Grid", cv2.WINDOW_NORMAL)
             cv2.imshow("Warped Grid", grid)
+            cv2.waitKey(1)
             cv2.waitKey(0)
             cv2.destroyAllWindows()
 
@@ -76,9 +79,10 @@ def detect_sudoku_grid(image_path, output_folder="./data/sudoku_squares", debug_
         grid_edged = cv2.erode(grid_edged, kernel, iterations=2)
 
         if debug_enabled:
-            cv2.imshow("Grid Gray", grid_gray)
-            cv2.imshow("Grid Blurred", grid_blurred)
-            cv2.imshow("Grid Edged", grid_edged)
+            for win_name, img in [("Grid Gray", grid_gray), ("Grid Blurred", grid_blurred), ("Grid Edged", grid_edged)]:
+                cv2.namedWindow(win_name, cv2.WINDOW_NORMAL)
+                cv2.imshow(win_name, img)
+                cv2.waitKey(1)
             cv2.waitKey(0)
             cv2.destroyAllWindows()
 
@@ -138,7 +142,9 @@ def detect_sudoku_grid(image_path, output_folder="./data/sudoku_squares", debug_
                     if os.path.exists(square_path):
                         square_img = cv2.imread(square_path, cv2.IMREAD_GRAYSCALE)
                         grid_image[row * 28:(row + 1) * 28, col * 28:(col + 1) * 28] = square_img
+            cv2.namedWindow("Compiled Grid", cv2.WINDOW_NORMAL)
             cv2.imshow("Compiled Grid", grid_image)
+            cv2.waitKey(1)
             cv2.waitKey(0)
             cv2.destroyAllWindows()
 
