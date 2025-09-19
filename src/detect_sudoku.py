@@ -21,8 +21,8 @@ def detect_sudoku_grid(image_path, output_folder="./data/sudoku_squares", debug_
     image = cv2.convertScaleAbs(image, alpha=alpha, beta=beta)
     
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    blurred = cv2.GaussianBlur(gray, (5, 5), 0)
-    edged = cv2.Canny(blurred, 50, 150)
+    blurred = cv2.GaussianBlur(gray, (3, 3), 0)
+    edged = cv2.Canny(blurred, 30, 100)
 
     if debug_enabled:
         for win_name, img in [("Gray", gray), ("Blurred", blurred), ("Edged", edged)]:
@@ -75,13 +75,13 @@ def detect_sudoku_grid(image_path, output_folder="./data/sudoku_squares", debug_
 
         # Convert the grid to grayscale and find the interior contours
         grid_gray = cv2.cvtColor(grid, cv2.COLOR_BGR2GRAY)
-        grid_blurred = cv2.GaussianBlur(grid_gray, (5, 5), 0)
-        grid_edged = cv2.Canny(grid_blurred, 50, 150)
+        grid_blurred = cv2.GaussianBlur(grid_gray, (3, 3), 0)
+        grid_edged = cv2.Canny(grid_blurred, 30, 100)
 
         # Apply morphological operations to enhance the edges
         kernel = np.ones((3, 3), np.uint8)
-        grid_edged = cv2.dilate(grid_edged, kernel, iterations=2)
-        grid_edged = cv2.erode(grid_edged, kernel, iterations=2)
+        grid_edged = cv2.dilate(grid_edged, kernel, iterations=1)
+        grid_edged = cv2.erode(grid_edged, kernel, iterations=1)
 
         if debug_enabled:
             for win_name, img in [("Grid Gray", grid_gray), ("Grid Blurred", grid_blurred), ("Grid Edged", grid_edged)]:
