@@ -11,7 +11,7 @@ def main():
     parser = argparse.ArgumentParser(description='Sudoku Solver')
     parser.add_argument('input', nargs='?', default=None, help='Input file for the sudoku')
     parser.add_argument('-d', '--debug', action='store_true', help='Enable debug mode')
-    parser.add_argument('-t', '--type', type=int, default=3, help='Wait time before typing the sudoku')
+    parser.add_argument('-t', '--type', type=int, default=None, help='Wait time before typing the sudoku')
     parser.add_argument('-m', '--dark', action='store_true', help='Enable dark mode for the sudoku grid')
     
     args = parser.parse_args()
